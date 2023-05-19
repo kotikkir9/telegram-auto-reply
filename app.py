@@ -167,7 +167,7 @@ async def handle_private_message(message):
             break
     if reply:
         await asyncio.sleep(delay)
-        await app.send_read_acknowledge(message.chat_id, message._message_id)
+        await app.send_read_acknowledge(message.chat_id)
         await send(message.chat_id, reply_message, save=False)
 
 # =====================================
