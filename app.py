@@ -43,7 +43,7 @@ async def send(chat, message, save=True):
         if save:
             message_ids.append(message.id)
     except ValueError as e:
-        print("\033[91m{}\033[0m".format('\tAn error occurred while sending a messag\n'), str(e))
+        print('\nAn error occurred while sending a messag\n', str(e), '\n')
 
 
 async def update_message(text):
