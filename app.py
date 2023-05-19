@@ -36,20 +36,23 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 # SERVICE METHODS
 # =====================================
 
+async def try_send(chat, message, save):
+    if not save:
+        await app.send_read_acknowledge(chat)
+    message = await app.send_message(chat, message)
+    if save:
+        message_ids.append(message.id)
+
 async def send(chat, message, save=True):
     try:
-        message = await app.send_message(chat, message)
-        if save:
-            message_ids.append(message.id)
+        try_send(chat, message, save)
     except ValueError as e:
         # From documentation: https://docs.telethon.dev/en/stable/concepts/entities.html
         # To “encounter” an ID, you would have to “find it” like you would in the normal app. 
         # If the peer is in your dialogs, you would need to client.get_dialogs()
         try:
             await app.get_dialogs()
-            message = await app.send_message(chat, message)
-            if save:
-                message_ids.append(message.id)
+            try_send(chat, message, save)
         except ValueError as e:
             print('\nValueError occurred while trying to get all dialogs and send the message\n', str(e), '\n')
 
@@ -167,7 +170,6 @@ async def handle_private_message(message):
             break
     if reply:
         await asyncio.sleep(delay)
-        await app.send_read_acknowledge(message.chat_id)
         await send(message.chat_id, reply_message, save=False)
 
 # =====================================
