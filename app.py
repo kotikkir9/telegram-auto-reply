@@ -45,14 +45,14 @@ async def try_send(chat, message, save):
 
 async def send(chat, message, save=True):
     try:
-        try_send(chat, message, save)
+        await try_send(chat, message, save)
     except ValueError as e:
         # From documentation: https://docs.telethon.dev/en/stable/concepts/entities.html
         # To “encounter” an ID, you would have to “find it” like you would in the normal app. 
         # If the peer is in your dialogs, you would need to client.get_dialogs()
         try:
             await app.get_dialogs()
-            try_send(chat, message, save)
+            await try_send(chat, message, save)
         except ValueError as e:
             print('\nValueError occurred while trying to get all dialogs and send the message\n', str(e), '\n')
 
