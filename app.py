@@ -39,7 +39,7 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 
 async def send(chat, message, save=True):
     try:
-        message = await app.send_message(entity.id, message)
+        message = await app.send_message(chat, message)
     except ValueError:
         print('ValueError - send_message')
 
