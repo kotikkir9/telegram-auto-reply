@@ -38,7 +38,7 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 
 
 async def send(chat, message, save=True):
-    entity = app.get_entity(chat)
+    entity = await app.get_entity(chat)
     message = await app.send_message(entity.id, message)
     if save:
         message_ids.append(message.id)
