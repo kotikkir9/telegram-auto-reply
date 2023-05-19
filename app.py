@@ -153,8 +153,7 @@ async def handle_command_message(message):
                     await handle_unknown_command()
 
 
-# @app.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
-@app.on(events.NewMessage(func=lambda e: e.is_private))
+@app.on(events.NewMessage(incoming=True, func=lambda e: e.is_private))
 async def handle_private_message(message):
     if hasattr(message.chat, 'is_self') and message.chat.is_self:
         return
@@ -168,7 +167,7 @@ async def handle_private_message(message):
             break
     if reply:
         await asyncio.sleep(delay)
-        await app.send_read_acknowledge(message.chat_id, message.id)
+        await app.send_read_acknowledge(message.chat_id, message._message_id)
         await send(message.chat_id, reply_message, save=False)
 
 # =====================================
