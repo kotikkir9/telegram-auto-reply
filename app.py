@@ -42,8 +42,15 @@ async def send(chat, message, save=True):
         message = await app.send_message(chat, message)
         if save:
             message_ids.append(message.id)
+        return
     except ValueError as e:
         print('\nAn error occurred while sending a messag\n', str(e), '\n')
+
+    try:
+        dialogs = await app.get_dialogs()
+        message = await app.send_message(chat, message)
+    except ValueError as e:
+        print('\nAn error occurred while getting dialogs\n', str(e), '\n')
 
 
 async def update_message(text):
