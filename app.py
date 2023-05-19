@@ -36,21 +36,22 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 # SERVICE METHODS
 # =====================================
 
-
 async def send(chat, message, save=True):
     try:
         message = await app.send_message(chat, message)
         if save:
             message_ids.append(message.id)
-        return
     except ValueError as e:
-        print('\nAn error occurred while sending a messag\n', str(e), '\n')
-
-    try:
-        dialogs = await app.get_dialogs()
-        message = await app.send_message(chat, message)
-    except ValueError as e:
-        print('\nAn error occurred while getting dialogs\n', str(e), '\n')
+        # From documentation: https://docs.telethon.dev/en/stable/concepts/entities.html
+        # To “encounter” an ID, you would have to “find it” like you would in the normal app. 
+        # If the peer is in your dialogs, you would need to client.get_dialogs()
+        try:
+            await app.get_dialogs()
+            message = await app.send_message(chat, message)
+            if save:
+                message_ids.append(message.id)
+        except ValueError as e:
+            print('\nValueError occurred while trying to get all dialogs and send the message\n', str(e), '\n')
 
 
 async def update_message(text):
@@ -131,7 +132,7 @@ async def handle_command_message(message):
         if message.raw_text.startswith('/'):
             message_ids.append(message.id)
             command = message.raw_text.split(maxsplit=1)[0].lower()
-            print(f'{command} command was invoked')
+            # print(f'{command} command was invoked')
 
             match command:
                 case '/message':
@@ -174,4 +175,6 @@ async def handle_private_message(message):
 # =====================================
 
 app.start()
+print('Telegram auto-reply program is running...')
 app.run_until_disconnected()
+print('Program terminated')
