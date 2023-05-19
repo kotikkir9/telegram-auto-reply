@@ -28,7 +28,7 @@ else:
 keywords = set()
 keywords_string = os.getenv('KEYWORDS')
 if keywords_string:
-    keywords.update(keywords_string.split(';'))
+    keywords.update([word.strip() for word in keywords_string.split(';') if word.strip()])
 
 app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 
@@ -38,7 +38,7 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 
 
 async def send(chat, message, save=True):
-    message = await app.send_message(chat, message)
+    message = await app.send_message(str(chat), message)
     if save:
         message_ids.append(message.id)
 
