@@ -40,18 +40,10 @@ app = TelegramClient("my_account", os.getenv('API_ID'), os.getenv('API_HASH'))
 async def send(chat, message, save=True):
     try:
         message = await app.send_message(chat, message)
-    except ValueError:
-        print('ValueError - send_message')
-
-    try:
-        entity = await app.get_entity(chat)
-    except ValueError:
-        print('ValueError - get_entity')
-
-    # entity = await app.get_entity(chat)
-    # message = await app.send_message(entity.id, message)
-    # if save:
-        # message_ids.append(message.id)
+        if save:
+            message_ids.append(message.id)
+    except ValueError as e:
+        print('An error occurred while sending a message\n', str(e))
 
 
 async def update_message(text):
