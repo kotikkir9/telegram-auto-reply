@@ -83,6 +83,7 @@ ___
 > /clear
 
 Deletes all the command messages (inside 'Saved Messages') from the current session.
+___
 
 > /exit
 
