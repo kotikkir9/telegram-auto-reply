@@ -31,3 +31,60 @@ DELAY=
 KEYWORDS=""
 REPLY_MESSAGE=""
 ```
+
+# Bot commands
+
+> /messages
+
+Lists all the messages from the message list with its index and content.
+___
+
+> /m_add\
+> {Your message here}
+
+Adds a new message to the message list.
+___
+
+> /m_remove {index}
+
+Removes the message with the given index from the message list.
+___
+
+> /m_clear
+
+Removes all the messages from the message list.
+___
+
+> /k_add {keyword 1} {keyword 2} {keyword 3}
+
+Adds the keywords to the keyword list.
+___
+
+> /k_remove {keyword 1} {keyword 2} {keyword 3}
+
+Removes the given keywords from the keyword list.
+___
+
+> /k_clear
+
+Removes all the keywords from the keyword list.
+___
+
+> /info
+
+Returns the info about delay, keywords and message count.
+___
+
+> /delay {seconds}
+
+Sets the delay to the given delay input.
+___
+
+> /clear
+
+Deletes all the command messages (inside 'Saved Messages') from the current session.
+
+> /exit
+
+Terminates the program and deletes all the messages (inside 'Saved Messages') from the session.
+___
