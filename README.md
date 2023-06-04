@@ -29,7 +29,6 @@ API_ID=
 API_HASH=""
 DELAY=
 KEYWORDS=""
-REPLY_MESSAGE=""
 ```
 
 # Bot commands
