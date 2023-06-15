@@ -4,13 +4,20 @@ from telethon import TelegramClient, events
 from dotenv import load_dotenv
 
 load_dotenv()
-chat='@'
+
+chat = os.getenv('CHAT')
+try:
+    chat = int(chat)
+except:
+    print('failed to parse int')
+
 
 async def main() -> None:
     app = TelegramClient('my_account', os.getenv('API_ID'), os.getenv('API_HASH'))
 
-    @app.on(events.NewMessage(chats=chat, incoming=True))
+    @app.on(events.NewMessage(chats=chat))
     async def handle_private_message(message):
+        print(message.message.raw_text)
         if message.buttons:
             for button in message.buttons:
                 url = button[0].url
@@ -22,4 +29,8 @@ async def main() -> None:
     await app.run_until_disconnected()
 
 if __name__ == "__main__":
-    asyncio.run(main())
+    try:
+        print('app started...')
+        asyncio.run(main())
+    except:
+        print('app terminated...')
